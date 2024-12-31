@@ -1,0 +1,11 @@
+{
+    "display_name": "MLPCHAG Search",
+    "loading_order": 6,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "Your Name",
+    "version": "1.0.0",
+    "homePage": "https://mlpchag.neocities.org"
+}

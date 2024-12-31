@@ -1,0 +1,265 @@
+/* Base popup styles */
+.mlpchag-popup {
+    display: flex;
+    flex-direction: column;
+    /* Adjust to your preference (85vh, 90vh, etc.) */
+    max-height: 83vh;
+    background: var(--background-primary);
+    position: relative;
+    /* Prevent scrolling in the outer container */
+    overflow: hidden;
+}
+
+/* Header section */
+.search-header {
+    flex-shrink: 0;
+    background: var(--background-primary);
+    /* Slimmer header by reducing top/bottom padding */
+    padding: 10px;
+    z-index: 100;
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+}
+
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    /* slightly smaller gap between sections */
+    gap: 8px;
+}
+
+.search-bar {
+    display: flex;
+    /* less horizontal gap between input & dropdown */
+    gap: 6px;
+}
+
+.search-bar input {
+    flex: 1;
+    min-width: 0;
+    /* smaller padding for a slimmer field */
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: var(--background-secondary);
+    color: var(--text-primary);
+}
+
+.sort-select {
+    /* smaller padding for dropdown */
+    min-width: 100px;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 3px 6px;
+}
+
+/* Categories section */
+.categories-row {
+    display: flex;
+    /* tighter spacing */
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.category-button {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 14px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--category-color);
+    opacity: 0.6;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.category-button:hover {
+    opacity: 0.8;
+}
+
+.category-button.selected {
+    opacity: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Tags section */
+.tags-container {
+    display: flex;
+    flex-direction: column;
+    /* slightly smaller gap */
+    gap: 6px;
+}
+
+.tags-divider {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin: 4px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tags-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.tag-button {
+    padding: 3px 6px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--tag-color);
+    opacity: 0.6;
+    color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+}
+
+.tag-button:hover {
+    opacity: 0.8;
+}
+
+.tag-button.selected {
+    opacity: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Clear filters button */
+.clear-tags-button {
+    margin-top: 8px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.clear-tags-button:hover {
+    background-color: var(--background-tertiary);
+}
+
+/* Scrollable content section */
+.scrollable-content {
+    /* This is the only area that should scroll */
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    position: relative;
+    margin-bottom: auto;
+}
+
+/* Character list section */
+.character-list-popup {
+    padding: 15px;
+}
+
+.character-list-container {
+    background: var(--background-secondary);
+    padding: 15px;
+    margin: 15px;
+    border-radius: 8px;
+}
+
+.character-list-item {
+    display: flex;
+    padding: 15px;
+    gap: 15px;
+    margin-bottom: 10px;
+    background: var(--background-primary);
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.character-list-item .thumbnail {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.character-list-item .info {
+    flex: 1;
+    min-width: 0;
+}
+
+.character-list-item .name {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.character-list-item .author {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.character-list-item .description {
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.character-list-item .download-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    background: var(--background-secondary);
+    transition: background-color 0.2s;
+}
+
+.character-list-item .download-btn:hover {
+    background: var(--background-tertiary);
+}
+
+/* Footer section */
+.search-footer {
+    flex-shrink: 0;
+    background: var(--background-primary);
+    padding: 15px;
+    border-top: 2px solid var(--border-color);
+    z-index: 100;
+    position: sticky;
+    bottom: 0;
+}
+
+.page-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.page-buttons button {
+    padding: 4px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.page-buttons button:hover {
+    background: var(--background-tertiary);
+}
+
+/* Loading and error states */
+.loading-characters,
+.no-characters-found,
+.error {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+}
