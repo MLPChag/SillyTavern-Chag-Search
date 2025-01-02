@@ -1,20 +1,35 @@
-/* Base popup styles */
+/* Main theme variables - Edit these to change the overall color scheme */
+:root {
+    --background-primary: #1a1b1e;
+    --background-secondary: #2a2b2e;
+    --background-tertiary: #3a3b3e;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: #404040;
+    --category-color: #4a4a4a;
+    --tag-color: #e0e0e0;
+}
+
+/* ==========================================================================
+   Base Modal Structure
+   ========================================================================== */
+
 .mlpchag-popup {
     display: flex;
     flex-direction: column;
-    /* Adjust to your preference (85vh, 90vh, etc.) */
     max-height: 83vh;
     background: var(--background-primary);
     position: relative;
-    /* Prevent scrolling in the outer container */
     overflow: hidden;
 }
 
-/* Header section */
+/* ==========================================================================
+   Header Section Styles
+   ========================================================================== */
+
 .search-header {
     flex-shrink: 0;
     background: var(--background-primary);
-    /* Slimmer header by reducing top/bottom padding */
     padding: 10px;
     z-index: 100;
     border-bottom: 2px solid var(--border-color);
@@ -25,20 +40,18 @@
 .search-controls {
     display: flex;
     flex-direction: column;
-    /* slightly smaller gap between sections */
     gap: 8px;
 }
 
+/* Search Bar Component */
 .search-bar {
     display: flex;
-    /* less horizontal gap between input & dropdown */
     gap: 6px;
 }
 
 .search-bar input {
     flex: 1;
     min-width: 0;
-    /* smaller padding for a slimmer field */
     padding: 6px;
     border-radius: 4px;
     border: 1px solid var(--border-color);
@@ -47,7 +60,6 @@
 }
 
 .sort-select {
-    /* smaller padding for dropdown */
     min-width: 100px;
     background: var(--background-secondary);
     color: var(--text-primary);
@@ -56,10 +68,13 @@
     padding: 3px 6px;
 }
 
-/* Categories section */
+/* ==========================================================================
+   Category and Tag System
+   ========================================================================== */
+
+/* Category Buttons */
 .categories-row {
     display: flex;
-    /* tighter spacing */
     gap: 6px;
     margin-bottom: 8px;
 }
@@ -87,11 +102,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Tags section */
+/* Tag System */
 .tags-container {
     display: flex;
     flex-direction: column;
-    /* slightly smaller gap */
     gap: 6px;
 }
 
@@ -131,7 +145,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Clear filters button */
+/* Clear Filters Button */
 .clear-tags-button {
     margin-top: 8px;
     padding: 4px 8px;
@@ -147,9 +161,11 @@
     background-color: var(--background-tertiary);
 }
 
-/* Scrollable content section */
+/* ==========================================================================
+   Content Area
+   ========================================================================== */
+
 .scrollable-content {
-    /* This is the only area that should scroll */
     flex: 1;
     overflow-y: auto;
     min-height: 0;
@@ -157,7 +173,10 @@
     margin-bottom: auto;
 }
 
-/* Character list section */
+/* ==========================================================================
+   Character List Styles
+   ========================================================================== */
+
 .character-list-popup {
     padding: 15px;
 }
@@ -171,44 +190,61 @@
 
 .character-list-item {
     display: flex;
-    padding: 15px;
-    gap: 15px;
-    margin-bottom: 10px;
+    padding: 12px;
+    gap: 12px;
+    margin-bottom: 8px;
     background: var(--background-primary);
     border-radius: 8px;
     position: relative;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.character-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .character-list-item .thumbnail {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .character-list-item .info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .character-list-item .name {
     font-size: 1.1em;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .character-list-item .author {
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    font-size: 0.9em;
+    margin-bottom: 4px;
 }
 
 .character-list-item .description {
-    font-size: 0.9em;
-    margin-bottom: 8px;
+    font-size: 0.85em;
     color: var(--text-secondary);
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
 }
 
+/* Download Button on List Items */
 .character-list-item .download-btn {
     position: absolute;
     right: 10px;
@@ -224,7 +260,183 @@
     background: var(--background-tertiary);
 }
 
-/* Footer section */
+/* Character Tags Display */
+.character-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: auto;
+}
+
+.character-tag {
+    font-size: 0.8em;
+    padding: 2px 6px;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Preview Modal Styles
+   ========================================================================== */
+
+.character-preview-modal {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--background-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 15px;
+}
+
+.preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Header Section with Image */
+.preview-image-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.preview-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.preview-header {
+    flex: 1;
+}
+
+.preview-name {
+    font-size: 1.4em;
+    margin: 0 0 5px 0;
+}
+
+.preview-author {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Download Button */
+.download-button {
+    padding: 8px 15px;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.download-button:hover {
+    background: var(--background-tertiary);
+}
+
+/* Content Sections */
+.preview-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.preview-section {
+    background: var(--background-secondary);
+    border-radius: 8px;
+}
+
+.section-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.section-content {
+    padding: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Greetings System */
+.greetings-content {
+    position: relative;
+}
+
+.greeting {
+    display: none;
+    padding: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.greeting.active {
+    display: block;
+}
+
+.greeting-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.greeting-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--background-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+}
+
+.greeting-dot:hover {
+    background: var(--background-tertiary);
+}
+
+.greeting-dot.active {
+    background: var(--background-tertiary);
+    font-weight: bold;
+}
+
+/* Custom Scrollbar Styling */
+.section-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.section-content::-webkit-scrollbar-track {
+    background: var(--background-primary);
+    border-radius: 4px;
+}
+
+.section-content::-webkit-scrollbar-thumb {
+    background: var(--background-tertiary);
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+
 .search-footer {
     flex-shrink: 0;
     background: var(--background-primary);
@@ -255,11 +467,38 @@
     background: var(--background-tertiary);
 }
 
-/* Loading and error states */
+/* ==========================================================================
+   Status Messages
+   ========================================================================== */
+
 .loading-characters,
 .no-characters-found,
 .error {
     text-align: center;
     padding: 20px;
     color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .preview-image-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .preview-header {
+        text-align: center;
+    }
+
+    .preview-image {
+        margin: 0 auto;
+    }
+
+    .download-button {
+        width: 100%;
+        justify-content: center;
+    }
 }
