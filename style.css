@@ -342,6 +342,33 @@
     background: var(--background-tertiary);
 }
 
+
+/* Return Button */
+.return-section {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.return-button {
+    padding: 8px 15px;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+
+.return-button:hover {
+    background: var(--background-tertiary);
+}
+
+
+
 /* Content Sections */
 .preview-sections {
     display: flex;
