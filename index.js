@@ -202,9 +202,17 @@ function createPreviewModal(character) {
                     </div>
                 ` : ''}
             </div>
+
+            <!-- Return to List button -->
+            <div class="return-section" style="margin-top: 15px;">
+                <button class="return-button">
+                    <i class="fa-solid fa-arrow-left"></i> Return to List
+                </button>
+            </div>
         </div>
     </div>`;
 }
+
 // ==========================================================================
 // Character List View Management
 // ==========================================================================
@@ -358,6 +366,15 @@ function setupPreviewModalInteractions() {
         const path = e.target.closest('.download-button').dataset.path;
         downloadCharacter(path);
     });
+
+    // Setup "Return to List" button
+    const returnBtn = modalElement.querySelector('.return-button');
+    if (returnBtn) {
+        returnBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            displayCharactersInListViewPopup();
+        });
+    }
 }
 
 /**
