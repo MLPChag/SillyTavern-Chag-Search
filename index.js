@@ -585,9 +585,7 @@ async function fetchCharactersBySearch({ searchTerm, page = 1 }) {
             const term = searchTerm.toLowerCase();
             characters = characters.filter(char => 
                 char.name.toLowerCase().includes(term) || 
-                char.author.toLowerCase().includes(term) ||
-                (char.description && char.description.toLowerCase().includes(term)) ||
-                char.tags.some(tag => tag.toLowerCase().includes(term))
+                char.author.toLowerCase().includes(term)
             );
         }
 
