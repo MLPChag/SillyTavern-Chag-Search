@@ -84,6 +84,8 @@ let selectedTags = []; // Currently selected tags for filtering
 let tagCounts = {}; // Counts of characters per tag
 let cachedData = null; // Cache for character data
 let lastFetchTime = 0; // Timestamp of last data fetch
+let batchMode = false; // Whether batch selection mode is active
+let selectedPaths = []; // Paths selected for batch download
 const CACHE_DURATION = 5 * 60 * 1000; // Cache duration in milliseconds (5 minutes)
 
 /**
@@ -293,9 +295,10 @@ function updateCharacterListInView(characters) {
             // Return the character card HTML
             return `
                 <div class="character-list-item">
-                    <img class="thumbnail" 
-                        src="${sanitizeText(char.url)}" 
-                        onerror="this.src='img/ai4.png'" 
+                    ${batchMode ? `<input type="checkbox" class="char-select" data-path="${sanitizeText(char.path)}" ${selectedPaths.includes(char.path) ? 'checked' : ''}>` : ''}
+                    <img class="thumbnail"
+                        src="${sanitizeText(char.url)}"
+                        onerror="this.src='img/ai4.png'"
                         alt="${sanitizeText(char.name)}">
                     <div class="info">
                         <div class="name">${sanitizeText(char.name)}</div>
@@ -333,7 +336,18 @@ function updateCharacterListInView(characters) {
  * @param {Event} event - Click event
  */
 async function handleCharacterListClick(event) {
-    if (event.target.classList.contains('download-btn')) {
+    if (event.target.classList.contains('char-select')) {
+        const checkbox = event.target;
+        const path = checkbox.dataset.path;
+        if (checkbox.checked) {
+            if (!selectedPaths.includes(path)) {
+                selectedPaths.push(path);
+            }
+        } else {
+            selectedPaths = selectedPaths.filter(p => p !== path);
+        }
+        return;
+    } else if (event.target.classList.contains('download-btn')) {
         // Handle direct download click
         downloadCharacter(event.target.getAttribute('data-path'));
     } else {
@@ -796,6 +810,12 @@ function generateListLayout() {
                     <button id="settingsToggleBtn" class="action-button">
                         <i class="fa-solid fa-cog"></i> Settings
                     </button>
+                    <button id="batchToggleBtn" class="action-button">
+                        <i class="fa-solid fa-list-check"></i> Batch download
+                    </button>
+                    <button id="downloadSelectedBtn" class="action-button" style="display:none;">
+                        <i class="fa-solid fa-download"></i> Download selected
+                    </button>
                 </div>
                 <div id="settingsPanel" class="settings-panel" style="display: none;">
                     <h3>Settings</h3>
@@ -887,6 +907,8 @@ async function initializeSearchAndNavigation() {
     const pageNumberSpan = document.getElementById('pageNumber');
     const randomCharacterBtn = document.getElementById('randomCharacterBtn');
     const settingsToggleBtn = document.getElementById('settingsToggleBtn');
+    const batchToggleBtn = document.getElementById('batchToggleBtn');
+    const downloadSelectedBtn = document.getElementById('downloadSelectedBtn');
     const settingsPanel = document.getElementById('settingsPanel');
     const resultCountSpan = document.getElementById('resultCount');
     
@@ -941,6 +963,22 @@ async function initializeSearchAndNavigation() {
                 setupPreviewModalInteractions();
             } else {
                 toastr.error('No characters available for random selection');
+            }
+        });
+    }
+
+    // Batch mode toggle
+    if (batchToggleBtn && downloadSelectedBtn) {
+        batchToggleBtn.addEventListener('click', () => {
+            batchMode = !batchMode;
+            selectedPaths = [];
+            downloadSelectedBtn.style.display = batchMode ? 'inline-flex' : 'none';
+            updateCharacterListInView(mlpcharacters);
+        });
+
+        downloadSelectedBtn.addEventListener('click', async () => {
+            for (const path of selectedPaths) {
+                await downloadCharacter(path);
             }
         });
     }
@@ -1039,6 +1077,8 @@ function setupNavigationHandlers(prevButton, nextButton, pageNumberSpan, searchI
  * Opens the character search popup
  */
 function openSearchPopup() {
+    batchMode = false;
+    selectedPaths = [];
     displayCharactersInListViewPopup();
 }
 
