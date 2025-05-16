@@ -326,22 +326,25 @@ function updateCharacterListInView(characters) {
     // Update the container with character elements
     characterListContainer.innerHTML = characterElements.join('');
 
-    // Add event listeners for character interactions
-    characterListContainer.addEventListener('click', async function(event) {
-        if (event.target.classList.contains('download-btn')) {
-            // Handle direct download click
-            downloadCharacter(event.target.getAttribute('data-path'));
-        } else {
-            // Handle character preview click
-            const listItem = event.target.closest('.character-list-item');
-            if (listItem) {
-                await handleCharacterPreview(listItem);
-            }
-        }
-    });
-
     // Update tag count displays
     updateTagCountDisplay();
+}
+
+/**
+ * Handles click events within the character list container
+ * @param {Event} event - Click event
+ */
+async function handleCharacterListClick(event) {
+    if (event.target.classList.contains('download-btn')) {
+        // Handle direct download click
+        downloadCharacter(event.target.getAttribute('data-path'));
+    } else {
+        // Handle character preview click
+        const listItem = event.target.closest('.character-list-item');
+        if (listItem) {
+            await handleCharacterPreview(listItem);
+        }
+    }
 }
 
 /**
@@ -762,6 +765,10 @@ async function displayCharactersInListViewPopup() {
     
     // Initialize containers and handlers
     characterListContainer = document.querySelector('.character-list-popup');
+    if (characterListContainer && !characterListContainer.dataset.listenerAttached) {
+        characterListContainer.addEventListener('click', handleCharacterListClick);
+        characterListContainer.dataset.listenerAttached = 'true';
+    }
     setupTagHandlers();
     await initializeSearchAndNavigation();
 }
