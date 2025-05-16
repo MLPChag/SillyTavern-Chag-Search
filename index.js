@@ -14,11 +14,10 @@
  */
 
 import {
-    getRequestHeaders,
     processDroppedFiles,
     callPopup
 } from "../../../../script.js";
-import { delay, debounce } from "../../../utils.js";
+import { debounce } from "../../../utils.js";
 import { extension_settings } from "../../../extensions.js";
 
 // ==========================================================================
@@ -26,7 +25,6 @@ import { extension_settings } from "../../../extensions.js";
 // ==========================================================================
 
 const extensionName = "SillyTavern-MLPCHAG-Search";
-const extensionFolderPath = `scripts/extensions/${extensionName}/`;
 
 // API Endpoints
 const API_ENDPOINT = "https://mlpchag.neocities.org";
