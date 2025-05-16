@@ -1077,6 +1077,8 @@ function setupNavigationHandlers(prevButton, nextButton, pageNumberSpan, searchI
  * Opens the character search popup
  */
 function openSearchPopup() {
+    batchMode = false;
+    selectedPaths = [];
     displayCharactersInListViewPopup();
 }
 
