@@ -205,6 +205,11 @@
     transition: all 0.2s ease;
 }
 
+.character-list-item .char-select {
+    margin-right: 8px;
+    align-self: flex-start;
+}
+
 .character-list-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
