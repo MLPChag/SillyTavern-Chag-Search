@@ -88,6 +88,20 @@ let cachedData = null; // Cache for character data
 let lastFetchTime = 0; // Timestamp of last data fetch
 const CACHE_DURATION = 5 * 60 * 1000; // Cache duration in milliseconds (5 minutes)
 
+/**
+ * Sanitizes text to prevent XSS attacks
+ * @param {string} text - Text to sanitize
+ * @returns {string} Sanitized text
+ */
+function sanitizeText(text) {
+    if (!text) return '';
+    return text
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 // ==========================================================================
 // Settings Management
 // ==========================================================================
@@ -167,12 +181,12 @@ function createPreviewModal(character) {
     <div class="character-preview-modal">
         <div class="preview-content">
             <div class="preview-image-section">
-                <img src="${character.url}" alt="${character.name}" class="preview-image">
+                <img src="${sanitizeText(character.url)}" alt="${sanitizeText(character.name)}" class="preview-image">
                 <div class="preview-header">
-                    <h2 class="preview-name">${character.name}</h2>
-                    <p class="preview-author">by ${character.author}</p>
+                    <h2 class="preview-name">${sanitizeText(character.name)}</h2>
+                    <p class="preview-author">by ${sanitizeText(character.author)}</p>
                 </div>
-                <a href="#" class="download-button" data-path="${character.path}">
+                <a href="#" class="download-button" data-path="${sanitizeText(character.path)}">
                     <i class="fa-solid fa-download"></i> Download
                 </a>
             </div>
@@ -184,7 +198,7 @@ function createPreviewModal(character) {
                             <h3>Description</h3>
                         </div>
                         <div class="section-content">
-                            <p>${character.description}</p>
+                            <p>${sanitizeText(character.description)}</p>
                         </div>
                     </div>
                 ` : ''}
@@ -195,7 +209,7 @@ function createPreviewModal(character) {
                             <h3>Personality</h3>
                         </div>
                         <div class="section-content">
-                            <p>${character.personality}</p>
+                            <p>${sanitizeText(character.personality)}</p>
                         </div>
                     </div>
                 ` : ''}
@@ -206,7 +220,7 @@ function createPreviewModal(character) {
                             <h3>Scenario</h3>
                         </div>
                         <div class="section-content">
-                            <p>${character.scenario}</p>
+                            <p>${sanitizeText(character.scenario)}</p>
                         </div>
                     </div>
                 ` : ''}
@@ -217,16 +231,16 @@ function createPreviewModal(character) {
                             <h3>Greetings</h3>
                         </div>
                         <div class="section-content greetings-content">
-                            ${Array.isArray(character.greetings) ? 
+                            ${Array.isArray(character.greetings) ?
                                 character.greetings.map((greeting, index) => `
-                                    <div class="greeting ${index === 0 ? 'active' : ''}">${greeting}</div>
-                                `).join('') : 
-                                `<div class="greeting active">${character.greetings}</div>`
+                                    <div class="greeting ${index === 0 ? 'active' : ''}">${sanitizeText(greeting)}</div>
+                                `).join('') :
+                                `<div class="greeting active">${sanitizeText(character.greetings)}</div>`
                             }
                             ${Array.isArray(character.greetings) && character.greetings.length > 1 ? `
                                 <div class="greeting-nav">
                                     ${character.greetings.map((_, index) => `
-                                        <button class="greeting-dot ${index === 0 ? 'active' : ''}" 
+                                        <button class="greeting-dot ${index === 0 ? 'active' : ''}"
                                                 data-index="${index}">
                                             ${index + 1}
                                         </button>
@@ -258,20 +272,6 @@ function createPreviewModal(character) {
  */
 function updateCharacterListInView(characters) {
     if (!characterListContainer) return;
-
-    /**
-     * Sanitizes text to prevent XSS attacks
-     * @param {string} text - Text to sanitize
-     * @returns {string} Sanitized text
-     */
-    const sanitizeText = (text) => {
-        if (!text) return '';
-        return text
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    };
 
     const characterElements = characters.map(char => {
         try {
